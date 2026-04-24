@@ -221,7 +221,7 @@ function App() {
   return (
     <>
       <style>{estilosGlobales}</style>
-      <div style={{ minHeight: '100vh', fontFamily: 'serif', backgroundImage: "url('/pantalla5.jpg')", backgroundSize: window.innerWidth > 768 ? 'cover' : 'contain', backgroundPosition: 'center top', backgroundAttachment: window.innerWidth > 768 ? 'fixed' : 'scroll', backgroundRepeat: 'no-repeat' }}>
+      <div style={{ minHeight: '100vh', fontFamily: 'serif', backgroundColor: '#1a0f0b' }}>
 
         {/* NAVBAR */}
         <nav style={estiloNavbar(colores)}>
@@ -485,8 +485,10 @@ const estiloDegradadoTransicion = {
 const estiloHero = {
   padding: 'clamp(60px, 12vh, 140px) clamp(16px, 5vw, 40px)',
   textAlign: 'center',
-  maxWidth: '900px',
-  margin: '0 auto',
+  maxWidth: '100%',
+  backgroundImage: "url('/pantalla5.jpg')",
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
 };
 
 const estiloBotonHero = (c) => ({
