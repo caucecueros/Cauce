@@ -58,8 +58,8 @@ const estilosGlobales = `
 `;
 
 // --- CONSTANTES ---
-const WHATSAPP_NUMBER = '5491100000000';
-const INSTAGRAM_USER = 'caucecueros';
+const WHATSAPP_NUMBER = '5493794896975';
+const INSTAGRAM_USER = 'cauce.cueros';
 
 const TALLES_CINTO = [
   { label: 'XS', detalle: '90cm' },
