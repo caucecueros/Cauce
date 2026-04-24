@@ -1,98 +1,123 @@
-import React, { useState, useEffect } from 'react'; 
-import { ArrowLeft, X } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ArrowLeft, X, ZoomIn } from 'lucide-react';
 
-export default function Catalogo({ volver, onAgregar }) {
-  const [seccionActiva, setSeccionActiva] = useState('menu');
-  const [productoSeleccionado, setProductoSeleccionado] = useState(null);
-  const [pasoCustom, setPasoCustom] = useState(1);
-  const [customItem, setCustomItem] = useState({ cuero: null, hebilla: null });
+const TarjetaProductoTerminado = ({ item, onVerZoom, coloresUI }) => {
+  const tieneVariantes = item.variantes && item.variantes.length > 0;
+  const [seleccionado, setSeleccionado] = useState(tieneVariantes ? item.variantes[0] : item);
+
+  return (
+    <div style={estiloTarjetaProducto}>
+      <div
+        style={{ ...estiloFotoTarjetaProducto, backgroundImage: `url(${seleccionado.img})` }}
+        onClick={() => onVerZoom(seleccionado)}
+      />
+      <div style={estiloInfoTarjetaProducto}>
+        <h3 style={{ margin: '0', textTransform: 'uppercase', fontSize: 'clamp(0.85rem, 2vw, 1rem)', letterSpacing: '1px' }}>
+          {item.nombre}
+        </h3>
+        {tieneVariantes && (
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', margin: '14px 0' }}>
+            {item.variantes.map(v => (
+              <div
+                key={v.id}
+                onClick={e => { e.stopPropagation(); setSeleccionado(v); }}
+                title={v.nombre}
+                style={{
+                  width: '22px', height: '22px', borderRadius: '50%', cursor: 'pointer',
+                  backgroundColor: v.material === 'Bronce' ? coloresUI.bronce : coloresUI.plata,
+                  border: seleccionado.id === v.id ? '2px solid white' : '1px solid rgba(255,255,255,0.3)',
+                  boxShadow: seleccionado.id === v.id ? '0 0 10px rgba(255,255,255,0.4)' : 'none',
+                  transition: 'all 0.2s',
+                }}
+              />
+            ))}
+          </div>
+        )}
+        <p style={{ fontSize: '0.68rem', opacity: 0.45, margin: '8px 0 0', fontStyle: 'italic', fontFamily: 'sans-serif' }}>
+          Tocá la imagen para agregar
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default function Catalogo({ volver, onAgregar, seccionActiva, setSeccionActiva }) {
+  const [itemEnZoom, setItemEnZoom] = useState(null);
+  const [customItem, setCustomItem] = useState({ cuero: null, detalle: null });
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [seccionActiva, pasoCustom]); 
+    setCustomItem({ cuero: null, detalle: null });
+  }, [seccionActiva]);
 
-  const colores = {
+  const coloresUI = {
     marronOscuro: '#41251c',
-    plataletra: '#bcc1c3',
-    blanco: '#ffffff',
-    marronCrema: '#724734',
+    bronce: '#cd7f32',
+    plata: '#c0c0c0',
   };
-
-  const BotonRegresar = ({ destino }) => (
-    <button onClick={destino} style={estiloBotonRegresar}>
-      <ArrowLeft size={16} /> VOLVER
-    </button>
-  );
 
   const seccionesMateriales = {
     cueros: [
-      { id: 1, nombre: 'Vaqueta Natural', desc: 'Ideal para grabado a fuego. Cuero vacuno de 4mm.', img: '/cuero-natural.jpg', color: 'Natural', material: 'Vacuno' },
-      { id: 2, nombre: 'Engrasado Marrón', desc: 'Resistente y rústico. Proceso de engrasado profundo.', img: '/cuero-marron.jpg', color: 'Marrón', material: 'Vacuno' },
+      { id: 1, nombre: 'Vaqueta Natural', img: '/cuero-natural.jpg', material: 'Vacuno' },
+      { id: 2, nombre: 'Engrasado Marrón', img: '/cuero-marron.jpg', material: 'Vacuno' },
+      { id: 3, nombre: 'Negro Profundo', img: '/pantalla4.jpg', material: 'Vacuno' },
     ],
     hebillas: [
-      { id: 4, nombre: 'Hebilla Sol', desc: 'Bronce macizo fundido a la tierra.', img: '/Sol.jpg', material: 'Bronce' },
-      { id: 5, nombre: 'Estrella de Mar', desc: 'Aleación de zamak con baño en plata vieja.', img: '/hebilla-estrella.jpg', material: 'Plata Vieja' },
+      { id: 4, nombre: 'Hebilla Sol', variantes: [{ id: 41, nombre: 'Sol Bronce', img: '/Sol.jpg', material: 'Bronce' }, { id: 42, nombre: 'Sol Plata', img: '/sol-plata.jpg', material: 'Plata' }] },
+      { id: 5, nombre: 'Estrella', variantes: [{ id: 51, nombre: 'Estrella Plata', img: '/hebilla-estrella.jpg', material: 'Plata' }, { id: 52, nombre: 'Estrella Bronce', img: '/estrella-bronce.jpg', material: 'Bronce' }] },
+      { id: 6, nombre: 'Clásica', img: '/hebillas.jpg', material: 'Níquel' },
     ],
     tachas: [
-      { id: 20, nombre: 'Línea Central', desc: 'Distribución minimalista de 5 tachas en el centro.', img: '/tacha-linea.jpg', material: 'Níquel' },
-      { id: 21, nombre: 'Bordes Dobles', desc: '10 tachas en ambos márgenes del brazalete.', img: '/tacha-bordes.jpg', material: 'Bronce' },
-      { id: 22, nombre: 'Patrón Pampa', desc: 'Diseño geométrico tradicional con 8 tachas.', img: '/tacha-pampa.jpg', material: 'Plata Vieja' },
+      { id: 20, nombre: 'Línea Central', img: '/tacha-linea.jpg', material: 'Níquel' },
+      { id: 21, nombre: 'Bordes Dobles', img: '/tacha-bordes.jpg', material: 'Bronce' },
     ]
   };
 
   const seccionesProductos = {
     armados: {
-      titulo: "CINTURONES TERMINADOS",
+      titulo: 'CINTURONES TERMINADOS',
       items: [
-        { id: 7, nombre: 'Cinto Correntino', desc: 'Costura manual cruzada.', img: '/cinto-1.jpg', color: 'Habano', material: 'Cuero + Bronce' },
+        { id: 7, nombre: 'Cinto Sol', desc: 'Hebilla artesanal con baño de metal.', variantes: [{ id: 71, nombre: 'Cinto Sol Bronce', img: '/Cintosol.jpg', material: 'Bronce' }, { id: 72, nombre: 'Cinto Sol Plata', img: '/Cintosol1.jpg', material: 'Plata' }] },
+        { id: 8, nombre: 'Cinto Caballo', desc: 'Grabado tradicional.', img: '/Caballo.jpg' },
+        { id: 9, nombre: 'Cinto Hombre', desc: 'Costura manual reforzada.', img: '/Hombre.jpg' },
+        { id: 11, nombre: 'Cinto Puntera', desc: 'Cuero engrasado de alta resistencia.', img: '/cinto-gaucho.jpg' },
+        { id: 12, nombre: 'Cinto Circular', desc: 'Diseño clásico correntino.', img: '/Circular.jpg' },
+        { id: 13, nombre: 'Cinto Clásico', desc: 'Hebilla artesanal con baño de metal.', variantes: [{ id: 131, nombre: 'Cinto Clásico Bronce', img: '/Clasico1.jpg', material: 'Bronce' }, { id: 132, nombre: 'Cinto Clásico Plata', img: '/Clasico.jpg', material: 'Plata' }] },
       ]
     },
     brazaletes: {
-      titulo: "BRAZALETES TERMINADOS",
-      items: [
-        { id: 10, nombre: 'Muñequera Pampa', desc: 'Grabado tradicional.', img: '/brazalete-1.jpg', color: 'Negro', material: 'Cuero' },
-      ]
+      titulo: 'BRAZALETES TERMINADOS',
+      items: [{ id: 10, nombre: 'Muñequera Pampa', desc: 'Grabado tradicional.', img: '/brazalete-1.jpg' }]
     }
-  };
-
-  const manejarSeleccion = (item, tipo = null) => {
-    setProductoSeleccionado({ ...item, tipoPersonalizacion: tipo });
-  };
-
-  const confirmarAccion = (item) => {
-    if (item.tipoPersonalizacion === 'cuero') {
-      setCustomItem({ ...customItem, cuero: item });
-      setPasoCustom(2);
-    } else if (item.tipoPersonalizacion === 'hebilla' || item.tipoPersonalizacion === 'tacha') {
-      const esCinto = seccionActiva === 'personalizarCinto';
-      onAgregar({ 
-        id: Date.now(), 
-        nombre: `${esCinto ? 'Cinto' : 'Brazalete'} Personalizado`, 
-        desc: `${customItem.cuero.nombre} + ${item.nombre}`,
-        img: customItem.cuero.img,
-        material: item.material || 'Artesanal',
-        color: customItem.cuero.color 
-      });
-      setSeccionActiva('menu');
-      setPasoCustom(1);
-    } else {
-      onAgregar(item);
-    }
-    setProductoSeleccionado(null);
   };
 
   const ModalZoom = () => {
-    if (!productoSeleccionado) return null;
+    if (!itemEnZoom) return null;
+    const esConfigurador = seccionActiva.includes('personalizar');
     return (
-      <div style={estiloModalOverlay} onClick={() => setProductoSeleccionado(null)}>
-        <div style={estiloModalContenido} onClick={(e) => e.stopPropagation()}>
-          <X onClick={() => setProductoSeleccionado(null)} style={estiloBotonCerrar} size={24} />
-          <img src={productoSeleccionado.img} style={estiloFotoZoom} alt="zoom" />
-          <div style={estiloDetalleZoom}>
-            <h2 style={{ letterSpacing: '2px', marginBottom: '10px' }}>{productoSeleccionado.nombre}</h2>
-            <p style={{ fontSize: '0.9rem', opacity: 0.8, marginBottom: '20px' }}>{productoSeleccionado.desc}</p>
-            <button onClick={() => confirmarAccion(productoSeleccionado)} style={estiloBotonCompra}>
-              {productoSeleccionado.tipoPersonalizacion === 'cuero' ? 'SELECCIONAR CUERO' : 'AGREGAR A LA BOLSA'}
+      <div style={estiloModalOverlay} onClick={() => setItemEnZoom(null)}>
+        <div style={{ ...estiloModalContenido, animation: 'fadeSlideUp 0.3s ease both' }} onClick={e => e.stopPropagation()}>
+          <X onClick={() => setItemEnZoom(null)} style={estiloBotonCerrar} size={22} />
+          <img src={itemEnZoom.img} style={estiloFotoZoom} alt="zoom" />
+          <div style={{ marginTop: '16px', color: '#fff' }}>
+            <h2 style={{ letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '8px', fontSize: 'clamp(1rem, 3vw, 1.3rem)' }}>
+              {itemEnZoom.nombre}
+            </h2>
+            <p style={{ fontSize: '0.88rem', marginBottom: '18px', opacity: 0.85, fontFamily: 'sans-serif' }}>
+              {itemEnZoom.desc || 'Artesanía en cuero de alta calidad.'}
+            </p>
+            <button
+              onClick={() => {
+                if (esConfigurador) {
+                  if (itemEnZoom.material === 'Vacuno') setCustomItem({ ...customItem, cuero: itemEnZoom });
+                  else setCustomItem({ ...customItem, detalle: itemEnZoom });
+                } else {
+                  onAgregar(itemEnZoom);
+                }
+                setItemEnZoom(null);
+              }}
+              style={estiloBotonSeleccionarZoom}
+            >
+              {esConfigurador ? 'SELECCIONAR PARA ARMAR' : 'AGREGAR A LA BOLSA'}
             </button>
           </div>
         </div>
@@ -100,42 +125,108 @@ export default function Catalogo({ volver, onAgregar }) {
     );
   };
 
+  const TarjetaOpcion = ({ item }) => {
+    const tieneVariantes = item.variantes && item.variantes.length > 0;
+    const [varianteActiva, setVarianteActiva] = useState(tieneVariantes ? item.variantes[0] : item);
+    const esSel = (customItem.cuero?.id === varianteActiva.id || customItem.detalle?.id === varianteActiva.id);
+    return (
+      <div style={{ ...estiloTarjetaOpcion, border: esSel ? '2px solid rgba(255,255,255,0.8)' : '1px solid rgba(255,255,255,0.1)', transform: esSel ? 'scale(1.02)' : 'scale(1)', transition: 'all 0.2s' }}>
+        <div
+          style={{ ...estiloFotoOpcion, backgroundImage: `url(${varianteActiva.img})`, height: '90px' }}
+          onClick={() => {
+            if (varianteActiva.material === 'Vacuno') setCustomItem({ ...customItem, cuero: varianteActiva });
+            else setCustomItem({ ...customItem, detalle: varianteActiva });
+          }}
+        >
+          {esSel && <div style={{ position: 'absolute', top: '5px', left: '5px', backgroundColor: 'rgba(255,255,255,0.9)', borderRadius: '50%', width: '16px', height: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', color: '#41251c', fontWeight: 'bold' }}>✓</div>}
+          <div onClick={e => { e.stopPropagation(); setItemEnZoom(varianteActiva); }} style={estiloIconoZoom}>
+            <ZoomIn size={13} />
+          </div>
+        </div>
+        {tieneVariantes && (
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '7px', marginTop: '7px' }}>
+            {item.variantes.map(v => (
+              <div key={v.id} onClick={() => setVarianteActiva(v)} style={{ width: '13px', height: '13px', borderRadius: '50%', cursor: 'pointer', backgroundColor: v.material === 'Bronce' ? coloresUI.bronce : coloresUI.plata, border: varianteActiva.id === v.id ? '2px solid white' : '1px solid rgba(255,255,255,0.3)', transition: '0.15s' }} />
+            ))}
+          </div>
+        )}
+        <p style={estiloNombreOpcion}>{varianteActiva.nombre}</p>
+      </div>
+    );
+  };
+
+  // Vista: configurador
   if (seccionActiva === 'personalizarCinto' || seccionActiva === 'personalizarBrazalete') {
     const esCinto = seccionActiva === 'personalizarCinto';
-    let itemsAMostrar = pasoCustom === 1 ? seccionesMateriales.cueros : (esCinto ? seccionesMateriales.hebillas : seccionesMateriales.tachas);
-    
+    const listo = customItem.cuero && customItem.detalle;
     return (
-      <div style={{ padding: '40px', minHeight: '100vh', textAlign: 'center', color: 'white' }}>
-        <BotonRegresar destino={() => { setSeccionActiva('menu'); setPasoCustom(1); }} />
-        <h1 style={{ letterSpacing: '4px', fontSize: 'clamp(1.5rem, 5vw, 2.5rem)' }}>ARMA TU {esCinto ? 'CINTO' : 'BRAZALETE'}</h1>
-        <p style={{ opacity: 0.6, marginBottom: '40px' }}>Paso {pasoCustom} de 2: Seleccioná {pasoCustom === 1 ? 'tu cuero' : 'el detalle'}</p>
-        <div style={estiloGrillaMateriaPrima}>
-          {itemsAMostrar.map(item => (
-            <div key={item.id} style={estiloTarjetaMateriaPrima} onClick={() => manejarSeleccion(item, pasoCustom === 1 ? 'cuero' : (esCinto ? 'hebilla' : 'tacha'))}>
-              <div style={{ ...estiloFotoTarjetaMateriaPrima, backgroundImage: `url(${item.img})` }} />
-              <div style={estiloInfoTarjeta}>{item.nombre}</div>
+      <div style={estiloContenedorVista}>
+        <button onClick={() => setSeccionActiva('menu')} style={estiloBotonRegresar}>
+          <ArrowLeft size={15} /> VOLVER
+        </button>
+        <h1 style={estiloTituloVista}>ARMA TU {esCinto ? 'CINTO' : 'BRAZALETE'}</h1>
+
+        {/* Resumen selección */}
+        {(customItem.cuero || customItem.detalle) && (
+          <div style={estiloResumenSeleccion}>
+            {customItem.cuero && <span style={estiloChipSeleccion}>✓ {customItem.cuero.nombre}</span>}
+            {customItem.detalle && <span style={estiloChipSeleccion}>✓ {customItem.detalle.nombre}</span>}
+          </div>
+        )}
+
+        <div style={estiloGrillaConfigurador}>
+          <div style={estiloCajaConfigurador}>
+            <h3 style={estiloTituloConfig}>1. ELEGÍ EL CUERO</h3>
+            <div style={{ ...estiloGrillaOpciones, gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))' }}>
+              {seccionesMateriales.cueros.map(c => <TarjetaOpcion key={c.id} item={c} />)}
             </div>
-          ))}
+          </div>
+          <div style={estiloCajaConfigurador}>
+            <h3 style={estiloTituloConfig}>2. ELEGÍ EL {esCinto ? 'HEBILLA' : 'DETALLE'}</h3>
+            <div style={{ ...estiloGrillaOpciones, gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))' }}>
+              {(esCinto ? seccionesMateriales.hebillas : seccionesMateriales.tachas).map(m => (
+                <TarjetaOpcion key={m.id} item={m} />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div style={{ textAlign: 'center', marginTop: '40px' }}>
+          <button
+            disabled={!listo}
+            onClick={() => {
+              onAgregar({
+                id: Date.now(),
+                nombre: `${esCinto ? 'Cinto' : 'Brazalete'} Personalizado`,
+                desc: `${customItem.cuero.nombre} + ${customItem.detalle.nombre}`,
+                img: customItem.cuero.img,
+                material: customItem.cuero.material,
+              });
+              setSeccionActiva('menu');
+            }}
+            style={{ ...estiloBotonFinal, opacity: listo ? 1 : 0.4, cursor: listo ? 'pointer' : 'not-allowed', transition: 'opacity 0.3s' }}
+          >
+            {listo ? 'AGREGAR A LA BOLSA ✓' : 'SELECCIONÁ CUERO Y DETALLE'}
+          </button>
         </div>
         <ModalZoom />
       </div>
     );
   }
 
+  // Vista: lista de productos
   if (seccionActiva !== 'menu') {
     const data = seccionesProductos[seccionActiva];
     return (
-      <div style={{ padding: '40px', minHeight: '100vh', textAlign: 'center' }}>
-        <BotonRegresar destino={() => setSeccionActiva('menu')} />
-        <h1 style={{ color: '#fff', letterSpacing: '3px', marginBottom: '40px', fontSize: 'clamp(1.5rem, 5vw, 2.5rem)' }}>{data.titulo}</h1>
+      <div style={estiloContenedorVista}>
+        <button onClick={() => setSeccionActiva('menu')} style={estiloBotonRegresar}>
+          <ArrowLeft size={15} /> VOLVER
+        </button>
+        <h1 style={estiloTituloVista}>{data.titulo}</h1>
         <div style={estiloGrillaProductos}>
-          {data.items.map(item => (
-            <div key={item.id} style={estiloTarjetaProducto} onClick={() => manejarSeleccion(item)}>
-              <div style={{ ...estiloFotoTarjetaProducto, backgroundImage: `url(${item.img})` }} />
-              <div style={estiloInfoTarjetaProducto}>
-                <h3 style={{ margin: '0', fontSize: '1.2rem' }}>{item.nombre}</h3>
-                <p style={{ fontSize: '0.9rem', opacity: 0.8 }}>{item.desc}</p>
-              </div>
+          {data.items.map((item, i) => (
+            <div key={item.id} style={{ animation: `fadeSlideUp 0.5s ${i * 0.08}s ease both`, opacity: 0 }}>
+              <TarjetaProductoTerminado item={item} onVerZoom={setItemEnZoom} coloresUI={coloresUI} />
             </div>
           ))}
         </div>
@@ -144,82 +235,60 @@ export default function Catalogo({ volver, onAgregar }) {
     );
   }
 
+  // Vista: menú principal
   return (
-    <div style={{ padding: '20px', maxWidth: '1000px', margin: '0 auto', textAlign: 'center' }}>
-      <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <BotonRegresar destino={volver} />
-      </div>
-      <h1 style={{ letterSpacing: '5px', marginBottom: '60px', color: colores.blanco, fontSize: 'clamp(2rem, 8vw, 3rem)' }}>CATÁLOGO</h1>
+    <div style={{ padding: 'clamp(40px, 6vw, 80px) clamp(16px, 4vw, 20px)', maxWidth: '1400px', margin: '0 auto', textAlign: 'center' }}>
+      <h1 style={{ letterSpacing: '5px', marginBottom: '50px', color: '#fff', fontSize: 'clamp(1.8rem, 7vw, 3.5rem)' }}>
+        CATÁLOGO
+      </h1>
       <div style={estiloGrillaMenuPrincipal}>
-        <div onClick={() => setSeccionActiva('personalizarCinto')} style={{ ...estiloBloqueSimple, backgroundImage: "linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('/armado2.jpg')" }}>
-          <div style={estiloContenedorTexto}><h2 style={estiloTextoMenu}>Arma tu Cinto</h2></div>
-        </div>
-        <div onClick={() => setSeccionActiva('personalizarBrazalete')} style={{ ...estiloBloqueSimple, backgroundImage: "linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('/armado1.jpg')" }}>
-          <div style={estiloContenedorTexto}><h2 style={estiloTextoMenu}>Arma tu Brazalete</h2></div>
-        </div>
-        <div onClick={() => setSeccionActiva('armados')} style={{ ...estiloBloqueSimple, backgroundImage: "linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('/cinturon.jpg')" }}>
-          <div style={estiloContenedorTexto}><h2 style={estiloTextoMenu}>Cinturones</h2></div>
-        </div>
-        <div onClick={() => setSeccionActiva('brazaletes')} style={{ ...estiloBloqueSimple, backgroundImage: "linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('/brazalete.png')" }}>
-          <div style={estiloContenedorTexto}><h2 style={estiloTextoMenu}>Brazaletes</h2></div>
-        </div>
+        {[
+          { id: 'personalizarCinto',     t: 'Arma tu Cinto',     img: '/armado2.jpg' },
+          { id: 'personalizarBrazalete', t: 'Arma tu Brazalete', img: '/armado1.jpg' },
+          { id: 'armados',               t: 'Cinturones',        img: '/cinturon.jpg' },
+          { id: 'brazaletes',            t: 'Brazaletes',        img: '/brazalete.png' },
+        ].map((sec, i) => (
+          <div
+            key={sec.id}
+            className="bloque-catalogo"
+            onClick={() => setSeccionActiva(sec.id)}
+            style={{ ...estiloBloqueSimple, backgroundImage: `url(${sec.img})`, animation: `fadeSlideUp 0.5s ${i * 0.1}s ease both`, opacity: 0 }}
+          >
+            <div className="overlay-texto" style={estiloContenedorTexto}>
+              <h2 style={estiloTextoMenu}>{sec.t}</h2>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
 }
 
-// --- ESTILOS RESTAURADOS ---
-const estiloGrillaMenuPrincipal = { 
-  display: 'grid', 
-  gridTemplateColumns: 'repeat(auto-fit, 350px)', // Forzamos el tamaño de la foto que te gusta
-  gap: '40px', 
-  width: '100%',
-  justifyContent: 'center' // Centra los bloques en la pantalla
-};
-
-const estiloBloqueSimple = { 
-  border: '3px solid #ffffff', 
-  width: '350px',   // Ancho fijo igual al de tu foto
-  height: '350px',  // Alto fijo igual al de tu foto
-  display: 'flex', 
-  justifyContent: 'flex-end', 
-  alignItems: 'flex-end', 
-  cursor: 'pointer', 
-  backgroundSize: 'cover', 
-  backgroundPosition: 'center', 
-  borderRadius: '4px', 
-  position: 'relative', 
-  overflow: 'hidden' 
-};
-
-const estiloContenedorTexto = { 
-  padding: '25px', 
-  textAlign: 'right' 
-};
-
-const estiloTextoMenu = { 
-  fontSize: '1.8rem', 
-  fontWeight: 'bold', 
-  margin: '0', 
-  color: '#ffffff', 
-  textTransform: 'uppercase', 
-  letterSpacing: '2px', 
-  textShadow: '2px 2px 10px rgba(0,0,0,0.6)' 
-};
-
-// ... Otros estilos para que no se rompa nada ...
-const estiloBotonRegresar = { padding: '12px 30px', backgroundColor: '#41251c', color: 'white', border: '1px solid #bcc1c3', borderRadius: '4px', cursor: 'pointer', fontSize: '0.7rem', letterSpacing: '2px', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '30px' };
-const estiloGrillaProductos = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '30px', maxWidth: '1200px', margin: '0 auto' };
-const estiloTarjetaProducto = { backgroundColor: 'rgba(65, 37, 28, 0.6)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', overflow: 'hidden', cursor: 'pointer', textAlign: 'left' };
-const estiloFotoTarjetaProducto = { height: '250px', backgroundSize: 'cover', backgroundPosition: 'center' };
-const estiloInfoTarjetaProducto = { padding: '30px', color: 'white' };
-const estiloGrillaMateriaPrima = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '20px', maxWidth: '800px', margin: '0 auto' };
-const estiloTarjetaMateriaPrima = { backgroundColor: 'rgba(65, 37, 28, 0.6)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', overflow: 'hidden', cursor: 'pointer', textAlign: 'center' };
-const estiloFotoTarjetaMateriaPrima = { height: '150px', backgroundSize: 'cover', backgroundPosition: 'center' };
-const estiloInfoTarjeta = { padding: '20px', color: 'white' };
-const estiloModalOverlay = { position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.85)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000, padding: '10px' };
-const estiloModalContenido = { backgroundColor: '#2a1a14', border: '1px solid #bcc1c3', borderRadius: '8px', maxWidth: '500px', width: '100%', padding: 'clamp(20px, 5vw, 40px)', position: 'relative', color: 'white', textAlign: 'center', maxHeight: '90vh', overflowY: 'auto' };
-const estiloFotoZoom = { width: '100%', borderRadius: '4px' };
-const estiloDetalleZoom = { marginTop: '20px' };
-const estiloBotonCerrar = { position: 'absolute', top: '15px', right: '15px', background: 'none', border: 'none', cursor: 'pointer', color: 'white' };
-const estiloBotonCompra = { marginTop: '30px', padding: '15px 40px', backgroundColor: '#41251c', color: 'white', border: '1px solid #bcc1c3', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold', letterSpacing: '2px' };
+// --- ESTILOS ---
+const estiloContenedorVista = { padding: 'clamp(30px, 5vw, 60px) clamp(16px, 4vw, 40px)', minHeight: '80vh', maxWidth: '1200px', margin: '0 auto' };
+const estiloTituloVista = { color: '#fff', letterSpacing: '4px', marginBottom: '36px', textAlign: 'center', fontSize: 'clamp(1.4rem, 5vw, 2.2rem)' };
+const estiloGrillaMenuPrincipal = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 'clamp(16px, 3vw, 30px)', width: '100%', padding: '0 0 40px' };
+const estiloBloqueSimple = { border: '2px solid rgba(255,255,255,0.6)', aspectRatio: '1 / 1', width: '100%', maxWidth: '360px', margin: '0 auto', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'center', cursor: 'pointer', backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '6px', overflow: 'hidden', position: 'relative' };
+const estiloContenedorTexto = { backgroundColor: 'rgba(0,0,0,0.5)', width: '100%', padding: 'clamp(10px, 2vw, 16px)', textAlign: 'center', backdropFilter: 'blur(3px)', transition: 'background-color 0.3s' };
+const estiloTextoMenu = { fontSize: 'clamp(0.9rem, 2.5vw, 1.2rem)', fontWeight: 'bold', margin: '0', color: '#fff', textTransform: 'uppercase', letterSpacing: '2px' };
+const estiloBotonRegresar = { display: 'inline-flex', alignItems: 'center', gap: '7px', padding: '9px 18px', backgroundColor: '#41251c', color: 'white', border: '1px solid rgba(255,255,255,0.3)', borderRadius: '4px', cursor: 'pointer', marginBottom: '24px', fontSize: '0.75rem', letterSpacing: '1px', transition: 'opacity 0.2s' };
+const estiloGrillaProductos = { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 'clamp(16px, 3vw, 30px)' };
+const estiloTarjetaProducto = { backgroundColor: 'rgba(65, 37, 28, 0.55)', borderRadius: '8px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.08)', transition: 'transform 0.25s, box-shadow 0.25s' };
+const estiloFotoTarjetaProducto = { height: 'clamp(200px, 30vw, 300px)', backgroundSize: 'cover', backgroundPosition: 'center', cursor: 'pointer', transition: 'transform 0.4s' };
+const estiloInfoTarjetaProducto = { padding: 'clamp(14px, 3vw, 20px)', color: '#fff', textAlign: 'center' };
+const estiloGrillaConfigurador = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'clamp(16px, 3vw, 30px)' };
+const estiloCajaConfigurador = { backgroundColor: 'rgba(20, 15, 10, 0.8)', padding: 'clamp(16px, 3vw, 24px)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.06)' };
+const estiloGrillaOpciones = { display: 'grid', gap: '10px', maxHeight: '420px', overflowY: 'auto' };
+const estiloTarjetaOpcion = { padding: '8px', borderRadius: '8px', backgroundColor: 'rgba(255,255,255,0.04)', textAlign: 'center', cursor: 'pointer' };
+const estiloFotoOpcion = { backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '4px', cursor: 'pointer', position: 'relative' };
+const estiloNombreOpcion = { fontSize: '0.6rem', marginTop: '6px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', letterSpacing: '0.5px' };
+const estiloResumenSeleccion = { display: 'flex', justifyContent: 'center', gap: '10px', flexWrap: 'wrap', marginBottom: '24px' };
+const estiloChipSeleccion = { backgroundColor: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.25)', borderRadius: '20px', padding: '5px 14px', fontSize: '0.7rem', color: '#fff', fontFamily: 'sans-serif', letterSpacing: '0.5px' };
+const estiloBotonFinal = { padding: 'clamp(12px, 2vw, 16px) clamp(24px, 4vw, 36px)', backgroundColor: '#41251c', color: 'white', border: '1px solid rgba(255,255,255,0.4)', borderRadius: '4px', letterSpacing: '2px', fontWeight: 'bold', fontSize: 'clamp(0.7rem, 1.5vw, 0.85rem)' };
+const estiloIconoZoom = { position: 'absolute', top: '5px', right: '5px', backgroundColor: 'rgba(0,0,0,0.55)', padding: '4px', borderRadius: '50%', color: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' };
+const estiloModalOverlay = { position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.88)', zIndex: 3000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px', animation: 'fadeIn 0.25s ease' };
+const estiloModalContenido = { backgroundColor: '#2a1a14', padding: 'clamp(20px, 4vw, 30px)', borderRadius: '8px', maxWidth: '440px', width: '100%', position: 'relative', border: '1px solid rgba(255,255,255,0.15)' };
+const estiloFotoZoom = { width: '100%', borderRadius: '4px', maxHeight: '55vh', objectFit: 'contain' };
+const estiloBotonCerrar = { position: 'absolute', top: '10px', right: '10px', color: '#fff', cursor: 'pointer', opacity: 0.7 };
+const estiloBotonSeleccionarZoom = { marginTop: '16px', padding: '12px 24px', backgroundColor: '#41251c', color: '#fff', border: '1px solid rgba(255,255,255,0.3)', cursor: 'pointer', borderRadius: '4px', fontWeight: 'bold', letterSpacing: '1.5px', fontSize: '0.8rem', width: '100%' };
+const estiloTituloConfig = { fontSize: '0.75rem', color: 'rgba(255,255,255,0.6)', marginBottom: '14px', letterSpacing: '2px' };
