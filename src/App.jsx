@@ -265,16 +265,16 @@ function App() {
         {/* CONTENIDO CON ANIMACIÓN */}
         <div key={animKey} style={{ animation: 'fadeSlideUp 0.5s ease both' }}>
           {verCatalogo ? (
+            <div style={{ backgroundImage: "url('/pantalla5.jpg')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed', minHeight: '100vh' }}>
             <Catalogo
               volver={() => { setVerCatalogo(false); setSeccionCatalogo('menu'); }}
               onAgregar={agregarAlCarrito}
               seccionActiva={seccionCatalogo}
               setSeccionActiva={setSeccionCatalogo}
             />
+            </div>
           ) : (
             <>
-              <div style={estiloDegradadoTransicion} />
-
               <header style={estiloHero}>
                 <p style={{ fontSize: 'clamp(0.7rem, 2vw, 1rem)', letterSpacing: '5px', color: colores.blanco, marginBottom: '20px', fontWeight: 'bold', animation: 'fadeSlideUp 0.6s 0.1s ease both', opacity: 0 }}>
                   HECHO A MANO
