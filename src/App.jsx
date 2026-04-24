@@ -221,7 +221,7 @@ function App() {
   return (
     <>
       <style>{estilosGlobales}</style>
-      <div style={{ minHeight: '100vh', fontFamily: 'serif', backgroundImage: "url('/pantalla5.jpg')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed' }}>
+      <div style={{ minHeight: '100vh', fontFamily: 'serif', backgroundImage: "url('/pantalla5.jpg')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: window.innerWidth > 768 ? 'fixed' : 'scroll' }}>
 
         {/* NAVBAR */}
         <nav style={estiloNavbar(colores)}>
