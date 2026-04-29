@@ -243,10 +243,8 @@ export default function Catalogo({ volver, onAgregar, seccionActiva, setSeccionA
       </h1>
       <div style={estiloGrillaMenuPrincipal}>
         {[
-          { id: 'personalizarCinto',     t: 'Arma tu Cinto',     img: '/armado2.jpg' },
-          { id: 'personalizarBrazalete', t: 'Arma tu Brazalete', img: '/armado1.jpg' },
-          { id: 'armados',               t: 'Cinturones',        img: '/cinturon.jpg' },
-          { id: 'brazaletes',            t: 'Brazaletes',        img: '/brazalete.png' },
+          { id: 'armados',    t: 'Cinturones', img: '/cinturon.jpg' },
+          { id: 'brazaletes', t: 'Brazaletes', img: '/brazalete.png' },
         ].map((sec, i) => (
           <div
             key={sec.id}
