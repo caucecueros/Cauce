@@ -76,12 +76,12 @@ export default function Catalogo({ volver, onAgregar, seccionActiva, setSeccionA
     armados: {
       titulo: 'CINTURONES TERMINADOS',
       items: [
-        { id: 7, nombre: 'Cinto Sol', desc: 'Hebilla artesanal con baño de metal.', variantes: [{ id: 71, nombre: 'Cinto Sol Bronce', img: '/Cintosol.jpg', material: 'Bronce' }, { id: 72, nombre: 'Cinto Sol Plata', img: '/Cintosol1.jpg', material: 'Plata' }] },
-        { id: 8, nombre: 'Cinto Caballo', desc: 'Grabado tradicional.', img: '/Caballo.jpg' },
-        { id: 9, nombre: 'Cinto Hombre', desc: 'Costura manual reforzada.', img: '/Hombre.jpg' },
-        { id: 11, nombre: 'Cinto Puntera', desc: 'Cuero engrasado de alta resistencia.', img: '/cinto-gaucho.jpg' },
-        { id: 12, nombre: 'Cinto Circular', desc: 'Diseño clásico correntino.', img: '/Circular.jpg' },
-        { id: 13, nombre: 'Cinto Clásico', desc: 'Hebilla artesanal con baño de metal.', variantes: [{ id: 131, nombre: 'Cinto Clásico Bronce', img: '/Clasico1.jpg', material: 'Bronce' }, { id: 132, nombre: 'Cinto Clásico Plata', img: '/Clasico.jpg', material: 'Plata' }] },
+        { id: 7, nombre: 'Cinto Sol', desc: 'Hebilla artesanal con baño de metal.', variantes: [{ id: 71, nombre: 'Cinto Sol Bronce', img: '/CinturonEstrella.png', material: 'Bronce' }, { id: 72, nombre: 'Cinto Sol Plata', img: '/CinturonEstrella2.png', material: 'Plata' }] },
+        { id: 8, nombre: 'Cinto Toro', desc: 'Grabado tradicional.', img: '/CinturonToro.png' },
+        { id: 9, nombre: 'Cinto', desc: 'Costura manual reforzada.', img: '/CinturonRaro.png' },
+        { id: 11, nombre: 'Cinto Puntera', desc: 'Cuero engrasado de alta resistencia.', img: '/CinturonRedondo.png' },
+        { id: 12, nombre: 'Cinto', desc: 'Diseño clásico correntino.', img: '/Circular.jpg' },
+        { id: 13, nombre: 'Cinto Circular', desc: 'Hebilla artesanal con baño de metal.', variantes: [{ id: 131, nombre: 'Cinto Circular Bronce', img: '/CinturonCircular1.png', material: 'Bronce' }, { id: 132, nombre: 'Cinto Circular Plata', img: '/CinturonCircular2.png', material: 'Plata' }] },
       ]
     },
     brazaletes: {
