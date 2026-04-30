@@ -49,6 +49,16 @@ export default function Catalogo({ volver, onAgregar, seccionActiva, setSeccionA
     setCustomItem({ cuero: null, detalle: null });
   }, [seccionActiva]);
 
+  // Bloquear scroll del body cuando el modal está abierto
+  useEffect(() => {
+    if (itemEnZoom) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [itemEnZoom]);
+
   const coloresUI = {
     marronOscuro: '#41251c',
     bronce: '#cd7f32',
@@ -155,7 +165,6 @@ export default function Catalogo({ volver, onAgregar, seccionActiva, setSeccionA
     );
   };
 
-  // Vista: configurador
   if (seccionActiva === 'personalizarCinto' || seccionActiva === 'personalizarBrazalete') {
     const esCinto = seccionActiva === 'personalizarCinto';
     const listo = customItem.cuero && customItem.detalle;
@@ -165,15 +174,12 @@ export default function Catalogo({ volver, onAgregar, seccionActiva, setSeccionA
           <ArrowLeft size={15} /> VOLVER
         </button>
         <h1 style={estiloTituloVista}>ARMA TU {esCinto ? 'CINTO' : 'BRAZALETE'}</h1>
-
-        {/* Resumen selección */}
         {(customItem.cuero || customItem.detalle) && (
           <div style={estiloResumenSeleccion}>
             {customItem.cuero && <span style={estiloChipSeleccion}>✓ {customItem.cuero.nombre}</span>}
             {customItem.detalle && <span style={estiloChipSeleccion}>✓ {customItem.detalle.nombre}</span>}
           </div>
         )}
-
         <div style={estiloGrillaConfigurador}>
           <div style={estiloCajaConfigurador}>
             <h3 style={estiloTituloConfig}>1. ELEGÍ EL CUERO</h3>
@@ -190,7 +196,6 @@ export default function Catalogo({ volver, onAgregar, seccionActiva, setSeccionA
             </div>
           </div>
         </div>
-
         <div style={{ textAlign: 'center', marginTop: '40px' }}>
           <button
             disabled={!listo}
@@ -214,7 +219,6 @@ export default function Catalogo({ volver, onAgregar, seccionActiva, setSeccionA
     );
   }
 
-  // Vista: lista de productos
   if (seccionActiva !== 'menu') {
     const data = seccionesProductos[seccionActiva];
     return (
@@ -235,7 +239,6 @@ export default function Catalogo({ volver, onAgregar, seccionActiva, setSeccionA
     );
   }
 
-  // Vista: menú principal
   return (
     <div style={{ padding: 'clamp(40px, 6vw, 80px) clamp(16px, 4vw, 20px)', maxWidth: '1400px', margin: '0 auto', textAlign: 'center' }}>
       <h1 style={{ letterSpacing: '5px', marginBottom: '50px', color: '#fff', fontSize: 'clamp(1.8rem, 7vw, 3.5rem)' }}>
@@ -284,7 +287,7 @@ const estiloResumenSeleccion = { display: 'flex', justifyContent: 'center', gap:
 const estiloChipSeleccion = { backgroundColor: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.25)', borderRadius: '20px', padding: '5px 14px', fontSize: '0.7rem', color: '#fff', fontFamily: 'sans-serif', letterSpacing: '0.5px' };
 const estiloBotonFinal = { padding: 'clamp(12px, 2vw, 16px) clamp(24px, 4vw, 36px)', backgroundColor: '#41251c', color: 'white', border: '1px solid rgba(255,255,255,0.4)', borderRadius: '4px', letterSpacing: '2px', fontWeight: 'bold', fontSize: 'clamp(0.7rem, 1.5vw, 0.85rem)' };
 const estiloIconoZoom = { position: 'absolute', top: '5px', right: '5px', backgroundColor: 'rgba(0,0,0,0.55)', padding: '4px', borderRadius: '50%', color: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' };
-const estiloModalOverlay = { position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.88)', zIndex: 3000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px', animation: 'fadeIn 0.25s ease' };
+const estiloModalOverlay = { position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', backgroundColor: 'rgba(0,0,0,0.88)', zIndex: 9999, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px', animation: 'fadeIn 0.25s ease' };
 const estiloModalContenido = { backgroundColor: '#2a1a14', padding: 'clamp(20px, 4vw, 30px)', borderRadius: '8px', maxWidth: '440px', width: '100%', position: 'relative', border: '1px solid rgba(255,255,255,0.15)' };
 const estiloFotoZoom = { width: '100%', borderRadius: '4px', maxHeight: '55vh', objectFit: 'contain' };
 const estiloBotonCerrar = { position: 'absolute', top: '10px', right: '10px', color: '#fff', cursor: 'pointer', opacity: 0.7 };
