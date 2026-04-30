@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { ArrowLeft, X, ZoomIn } from 'lucide-react';
 
 const TarjetaProductoTerminado = ({ item, onVerZoom, coloresUI }) => {
@@ -49,7 +50,6 @@ export default function Catalogo({ volver, onAgregar, seccionActiva, setSeccionA
     setCustomItem({ cuero: null, detalle: null });
   }, [seccionActiva]);
 
-  // Bloquear scroll del body cuando el modal está abierto
   useEffect(() => {
     if (itemEnZoom) {
       document.body.style.overflow = 'hidden';
@@ -103,7 +103,8 @@ export default function Catalogo({ volver, onAgregar, seccionActiva, setSeccionA
   const ModalZoom = () => {
     if (!itemEnZoom) return null;
     const esConfigurador = seccionActiva.includes('personalizar');
-    return (
+
+    return createPortal(
       <div style={estiloModalOverlay} onClick={() => setItemEnZoom(null)}>
         <div style={{ ...estiloModalContenido, animation: 'fadeSlideUp 0.3s ease both' }} onClick={e => e.stopPropagation()}>
           <X onClick={() => setItemEnZoom(null)} style={estiloBotonCerrar} size={22} />
@@ -131,7 +132,8 @@ export default function Catalogo({ volver, onAgregar, seccionActiva, setSeccionA
             </button>
           </div>
         </div>
-      </div>
+      </div>,
+      document.body
     );
   };
 
