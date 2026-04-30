@@ -90,7 +90,7 @@ export default function Catalogo({ volver, onAgregar, seccionActiva, setSeccionA
         { id: 8, nombre: 'Cinto Toro', desc: 'Grabado tradicional.', img: '/CinturonToro.png' },
         { id: 9, nombre: 'Cinto', desc: 'Costura manual reforzada.', img: '/CinturonRaro.png' },
         { id: 11, nombre: 'Cinto Puntera', desc: 'Cuero engrasado de alta resistencia.', img: '/CinturonRedondo.png' },
-        { id: 12, nombre: 'Cinto', desc: 'Diseño clásico correntino.', img: '/Circular.jpg' },
+        { id: 12, nombre: 'Cinto', desc: 'Diseño clásico correntino.', img: '/cinturon.png' },
         { id: 13, nombre: 'Cinto Circular', desc: 'Hebilla artesanal con baño de metal.', variantes: [{ id: 131, nombre: 'Cinto Circular Bronce', img: '/CinturonCircular1.png', material: 'Bronce' }, { id: 132, nombre: 'Cinto Circular Plata', img: '/CinturonCircular2.png', material: 'Plata' }] },
       ]
     },
