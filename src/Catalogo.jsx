@@ -103,9 +103,9 @@ export default function Catalogo({ volver, onAgregar, seccionActiva, setSeccionA
     },
     brazaletes: {
       titulo: 'BRAZALETES',
-      items: [{ id: 10, nombre: 'Brazalete Clásica', desc: 'Simple Negro.', img: '/brazalete1.jpg' },
-              { id: 11, nombre: 'Brazalete Cruadrada', desc: 'Negro Plata.', img: '/brazalete2.jpg' },
-              { id: 12, nombre: 'Brazelete Gruesa', desc: 'Marron Dorado.', img: '/brazalete3.jpg' },
+      items: [{ id: 10, nombre: 'Brazalete Clásica', desc: 'Simple Negro.', img: '/brazalete1.png' },
+              { id: 11, nombre: 'Brazalete Cruadrada', desc: 'Negro Plata.', img: '/brazalete2.png' },
+              { id: 12, nombre: 'Brazelete Gruesa', desc: 'Marron Dorado.', img: '/brazalete3.png' },
               { id: 13, nombre: 'Brazalete Tachas', desc: 'Simple.', variantes: [{ id: 131, nombre: 'Brazalete Tachas Marron', img: '/brazalete4.png', material: 'Bronce' }, { id: 132, nombre: 'Brazalete Tachas Negro', img: '/brazalete5.png', material: 'Plata' }] },
       ]
     }
