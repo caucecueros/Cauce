@@ -84,7 +84,7 @@ export default function Catalogo({ volver, onAgregar, seccionActiva, setSeccionA
 
   const seccionesProductos = {
     armados: {
-      titulo: 'CINTURONES TERMINADOS',
+      titulo: 'CINTURONES',
       items: [
         { id: 7, nombre: 'Cinto Sol', desc: 'Hebilla artesanal con baño de metal.', variantes: [{ id: 71, nombre: 'Cinto Sol Bronce', img: '/CinturonEstrella.png', material: 'Bronce' }, { id: 72, nombre: 'Cinto Sol Plata', img: '/CinturonEstrella2.png', material: 'Plata' }] },
         { id: 8, nombre: 'Cinto Toro', desc: 'Grabado tradicional.', img: '/CinturonToro.png' },
@@ -92,10 +92,16 @@ export default function Catalogo({ volver, onAgregar, seccionActiva, setSeccionA
         { id: 11, nombre: 'Cinto Puntera', desc: 'Cuero engrasado de alta resistencia.', img: '/CinturonRedondo.png' },
         { id: 12, nombre: 'Cinto', desc: 'Diseño clásico correntino.', img: '/cinturon.png' },
         { id: 13, nombre: 'Cinto Circular', desc: 'Hebilla artesanal con baño de metal.', variantes: [{ id: 131, nombre: 'Cinto Circular Bronce', img: '/CinturonCircular1.png', material: 'Bronce' }, { id: 132, nombre: 'Cinto Circular Plata', img: '/CinturonCircular2.png', material: 'Plata' }] },
+        { id: 14, nombre: 'Cinto', desc: 'Diseño clásico correntino.', img: '/cinturon.png' },
+        { id: 15, nombre: 'Cinto', desc: 'Diseño clásico correntino.', img: '/cinturon.png' },
+        { id: 16, nombre: 'Cinto', desc: 'Diseño clásico correntino.', img: '/cinturon.png' },
+        { id: 17, nombre: 'Cinto', desc: 'Diseño clásico correntino.', img: '/cinturon.png' },
+        { id: 18, nombre: 'Cinto', desc: 'Diseño clásico correntino.', img: '/cinturon.png' },
+        { id: 19, nombre: 'Cinto', desc: 'Diseño clásico correntino.', img: '/cinturon.png' },
       ]
     },
     brazaletes: {
-      titulo: 'BRAZALETES TERMINADOS',
+      titulo: 'BRAZALETES',
       items: [{ id: 10, nombre: 'Muñequera Pampa', desc: 'Grabado tradicional.', img: '/brazalete-1.jpg' }]
     }
   };
