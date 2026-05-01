@@ -86,18 +86,18 @@ export default function Catalogo({ volver, onAgregar, seccionActiva, setSeccionA
     armados: {
       titulo: 'CINTURONES',
       items: [
-        { id: 7, nombre: 'Cinto Sol', desc: 'Hebilla artesanal con baño de metal.', variantes: [{ id: 71, nombre: 'Cinto Sol Bronce', img: '/CinturonEstrella.png', material: 'Bronce' }, { id: 72, nombre: 'Cinto Sol Plata', img: '/CinturonEstrella2.png', material: 'Plata' }] },
-        { id: 8, nombre: 'Cinto Toro', desc: 'Grabado tradicional.', img: '/CinturonToro.png' },
+        { id: 7, nombre: 'Cinto Clásica', desc: 'Diseño clásico correntino.', img: '/CinturonSimple.png' },
+        { id: 8, nombre: 'Cinto Clásico', desc: 'Diseño clásico correntino.', img: '/CinturonSimplo.png' },
         { id: 9, nombre: 'Cinto', desc: 'Costura manual reforzada.', img: '/CinturonRaro.png' },
-        { id: 11, nombre: 'Cinto Puntera', desc: 'Cuero engrasado de alta resistencia.', img: '/CinturonRedondo.png' },
-        { id: 12, nombre: 'Cinto', desc: 'Diseño clásico correntino.', img: '/cinturon.png' },
-        { id: 13, nombre: 'Cinto Circular', desc: 'Hebilla artesanal con baño de metal.', variantes: [{ id: 131, nombre: 'Cinto Circular Bronce', img: '/CinturonCircular1.png', material: 'Bronce' }, { id: 132, nombre: 'Cinto Circular Plata', img: '/CinturonCircular2.png', material: 'Plata' }] },
+        { id: 10, nombre: 'Cinto Puntera', desc: 'Cuero engrasado de alta resistencia.', img: '/CinturonRedondo.png' },
+        { id: 11, nombre: 'Cinto Flor', desc: 'Diseño clásico correntino.', img: '/CinturonCirculo.png' },
+        { id: 12, nombre: 'Cinto Indio', desc: 'Diseño clásico correntino.', img: '/CinturonIndio.png' },
+        { id: 13, nombre: 'Cinto Toro', desc: 'Grabado tradicional.', img: '/CinturonToro.png' },
         { id: 14, nombre: 'Cinto', desc: 'Diseño clásico correntino.', img: '/cinturon.png' },
         { id: 15, nombre: 'Cinto', desc: 'Diseño clásico correntino.', img: '/cinturon.png' },
-        { id: 16, nombre: 'Cinto', desc: 'Diseño clásico correntino.', img: '/cinturon.png' },
-        { id: 17, nombre: 'Cinto', desc: 'Diseño clásico correntino.', img: '/cinturon.png' },
-        { id: 18, nombre: 'Cinto', desc: 'Diseño clásico correntino.', img: '/cinturon.png' },
-        { id: 19, nombre: 'Cinto', desc: 'Diseño clásico correntino.', img: '/cinturon.png' },
+        { id: 16, nombre: 'Cinto Sol', desc: 'Hebilla artesanal con baño de metal.', variantes: [{ id: 161, nombre: 'Cinto Sol Bronce', img: '/CinturonEstrella.png', material: 'Bronce' }, { id: 162, nombre: 'Cinto Sol Plata', img: '/CinturonEstrella2.png', material: 'Plata' }] },
+        { id: 17, nombre: 'Cinto Ovál', desc: 'Hebilla artesanal con baño de metal.', variantes: [{ id: 171, nombre: 'Cinto Ovál Bronce', img: '/CinturonCircular1.png', material: 'Bronce' }, { id: 172, nombre: 'Cinto Ovál Plata', img: '/CinturonCircular2.png', material: 'Plata' }] },
+        { id: 18, nombre: 'Cinto Potro', desc: 'Hebilla artesanal con baño de metal.', variantes: [{ id: 181, nombre: 'Cinto Potro Bronce', img: '/CinturonPerro.png', material: 'Bronce' }, { id: 182, nombre: 'Cinto Potro Plata', img: '/CinturonPerro2.png', material: 'Plata' }] },
       ]
     },
     brazaletes: {
