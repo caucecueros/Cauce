@@ -95,10 +95,10 @@ export default function Catalogo({ volver, onAgregar, seccionActiva, setSeccionA
         { id: 13, nombre: 'Cinto Toro', desc: 'Grabado tradicional.', img: '/CinturonToro.png' },
         { id: 14, nombre: 'Cinto Durval', desc: 'Diseño clásico correntino.', img: '/CinturonDurval.png' },
         { id: 15, nombre: 'Cinto Terra', desc: 'Diseño clásico correntino.', img: '/CinturonTerra.png' },
-        { id: 16, nombre: 'Cinto Sol', desc: 'Hebilla artesanal con baño de metal.', variantes: [{ id: 161, nombre: 'Cinto Sol Bronce', img: '/CinturonEstrella.png', material: 'Bronce' }, { id: 162, nombre: 'Cinto Sol Plata', img: '/CinturonEstrella2.png', material: 'Plata' }] },
-        { id: 17, nombre: 'Cinto Ovál', desc: 'Hebilla artesanal con baño de metal.', variantes: [{ id: 171, nombre: 'Cinto Ovál Bronce', img: '/CinturonCircular1.png', material: 'Bronce' }, { id: 172, nombre: 'Cinto Ovál Plata', img: '/CinturonCircular2.png', material: 'Plata' }] },
-        { id: 18, nombre: 'Cinto Potro', desc: 'Hebilla artesanal con baño de metal.', variantes: [{ id: 181, nombre: 'Cinto Potro Bronce', img: '/CinturonPerro.png', material: 'Bronce' }, { id: 182, nombre: 'Cinto Potro Plata', img: '/CinturonPerro2.png', material: 'Plata' }] },
-        { id: 19, nombre: 'Cinto Cora', desc: 'Hebilla artesanal con baño de metal.', variantes: [{ id: 181, nombre: 'Cinto Cora Bronce', img: '/CinturonCorazon2.png', material: 'Bronce' }, { id: 182, nombre: 'Cinto Cora Plata', img: '/CinturonCorazon.png', material: 'Plata' }] },        
+        { id: 16, nombre: 'Cinto Cora', desc: 'Diseño clásico correntino.', img: '/CinturonCora.png' },        
+        { id: 17, nombre: 'Cinto Sol', desc: 'Hebilla artesanal con baño de metal.', variantes: [{ id: 171, nombre: 'Cinto Sol Bronce', img: '/CinturonEstrella.png', material: 'Bronce' }, { id: 172, nombre: 'Cinto Sol Plata', img: '/CinturonEstrella2.png', material: 'Plata' }] },
+        { id: 18, nombre: 'Cinto Ovál', desc: 'Hebilla artesanal con baño de metal.', variantes: [{ id: 181, nombre: 'Cinto Ovál Bronce', img: '/CinturonCircular1.png', material: 'Bronce' }, { id: 182, nombre: 'Cinto Ovál Plata', img: '/CinturonCircular2.png', material: 'Plata' }] },
+        { id: 19, nombre: 'Cinto Potro', desc: 'Hebilla artesanal con baño de metal.', variantes: [{ id: 191, nombre: 'Cinto Potro Bronce', img: '/CinturonPerro.png', material: 'Bronce' }, { id: 192, nombre: 'Cinto Potro Plata', img: '/CinturonPerro2.png', material: 'Plata' }] },     
       ]
     },
     brazaletes: {
