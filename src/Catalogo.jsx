@@ -125,7 +125,6 @@ export default function Catalogo({ volver, onAgregar, seccionActiva, setSeccionA
               {itemEnZoom.nombre}
             </h2>
             <p style={{ fontSize: '0.88rem', marginBottom: '18px', opacity: 0.85, fontFamily: 'sans-serif' }}>
-              {itemEnZoom.desc || 'Artesanía en cuero de alta calidad.'}
             </p>
             <button
               onClick={() => {
