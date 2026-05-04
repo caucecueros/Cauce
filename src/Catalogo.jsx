@@ -58,7 +58,6 @@ export default function Catalogo({ onAgregar }) {
         { id: 8,  nombre: 'Cinto Clásico',  img: '/CinturonSimplo.png' },
         { id: 9,  nombre: 'Cinto Tallado',  img: '/CinturonRaro.png' },
         { id: 10, nombre: 'Cinto Puntera',  img: '/CinturonRedondo.png' },
-        { id: 11, nombre: 'Cinto Flor',     img: '/CinturonCirculo.png' },
         { id: 12, nombre: 'Cinto Indio',    img: '/CinturonIndio.png' },
         { id: 13, nombre: 'Cinto Toro',     img: '/CinturonToro.png' },
         { id: 14, nombre: 'Cinto Durval',   img: '/CinturonDurval.png' },
