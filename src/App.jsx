@@ -327,7 +327,12 @@ function App() {
                       <div key={index} style={{ ...estiloItemCarrito, animation: `fadeSlideUp 0.4s ${index * 0.07}s ease both`, opacity: 0 }}>
                         <img src={item.img} alt={item.nombre} style={estiloImagenCarrito} />
                         <div style={{ flex: 1, minWidth: 0 }}>
-                          <h4 style={{ margin: '0 0 8px 0', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{item.nombre}</h4>
+                          <h4 style={{ margin: '0 0 4px 0', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{item.nombre}</h4>
+                          {item.precio && (
+                          <p style={{ margin: '0 0 8px', fontSize: '0.78rem', color: '#c6a584', fontFamily: 'sans-serif', fontWeight: 'bold', letterSpacing: '1px' }}>
+                          ${Number(item.precio).toLocaleString('es-AR')}
+                          </p>
+                          )}
                           {!esBraz ? (
                             <div>
                               <p style={{ margin: '0 0 6px', fontSize: '0.6rem', opacity: 0.55, letterSpacing: '1px', fontFamily: 'sans-serif' }}>TALLE:</p>
