@@ -33,11 +33,12 @@ const WHATSAPP_NUMBER = '5493794896975';
 const INSTAGRAM_USER = 'cauce.cueros';
 
 const TALLES_CINTO = [
-  { label: 'XS', detalle: '90cm' },
-  { label: 'S',  detalle: '95cm' },
-  { label: 'M',  detalle: '100cm / jean 38' },
-  { label: 'L',  detalle: '105cm' },
-  { label: 'XL', detalle: '110cm' },
+  { label: 'XS', detalle: '85cm / jean 34' },
+  { label: 'S',  detalle: '90cm / jean 36' },
+  { label: 'M',  detalle: '95cm / jean 38' },
+  { label: 'L',  detalle: '100cm / jean 40' },
+  { label: 'XL', detalle: '105cm / jean 42' },
+  { label: 'XXL', detalle: '110cm / jean 44' },
 ];
 
 const TALLES_BRAZALETE = [
@@ -70,11 +71,12 @@ function GuiaTalles({ onCerrar }) {
           </thead>
           <tbody>
             {[
-              { talle: 'XS', largo: '90cm', jean: '34 / 36' },
-              { talle: 'S',  largo: '95cm', jean: '36 / 38' },
-              { talle: 'M',  largo: '100cm', jean: '38 / 40' },
-              { talle: 'L',  largo: '105cm', jean: '40 / 42' },
-              { talle: 'XL', largo: '110cm', jean: '42 / 44' },
+              { talle: 'XS', largo: '85cm', jean: '34 / 36' },
+              { talle: 'S',  largo: '90cm', jean: '36 / 38' },
+              { talle: 'M',  largo: '90cm', jean: '38 / 40' },
+              { talle: 'L',  largo: '95cm', jean: '40 / 42' },
+              { talle: 'XL', largo: '105cm', jean: '42 / 44' },
+              { talle: 'XXL', largo: '110cm', jean: '44 / 46' },
             ].map((row, i) => (
               <tr key={row.talle} style={{ backgroundColor: i % 2 === 0 ? 'rgba(255,255,255,0.04)' : 'transparent' }}>
                 <td style={estiloCelda}><strong>{row.talle}</strong></td>
