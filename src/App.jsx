@@ -73,8 +73,8 @@ function GuiaTalles({ onCerrar }) {
             {[
               { talle: 'XS', largo: '85cm', jean: '34 / 36' },
               { talle: 'S',  largo: '90cm', jean: '36 / 38' },
-              { talle: 'M',  largo: '90cm', jean: '38 / 40' },
-              { talle: 'L',  largo: '95cm', jean: '40 / 42' },
+              { talle: 'M',  largo: '95cm', jean: '38 / 40' },
+              { talle: 'L',  largo: '100cm', jean: '40 / 42' },
               { talle: 'XL', largo: '105cm', jean: '42 / 44' },
               { talle: 'XXL', largo: '110cm', jean: '44 / 46' },
             ].map((row, i) => (
