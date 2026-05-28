@@ -33,12 +33,12 @@ const WHATSAPP_NUMBER = '5493794896975';
 const INSTAGRAM_USER = 'cauce.cueros';
 
 const TALLES_CINTO = [
-  { label: 'XS', detalle: '85cm / jean 34' },
-  { label: 'S',  detalle: '90cm / jean 36' },
-  { label: 'M',  detalle: '95cm / jean 38' },
-  { label: 'L',  detalle: '100cm / jean 40' },
-  { label: 'XL', detalle: '105cm / jean 42' },
-  { label: 'XXL', detalle: '110cm / jean 44' },
+  { label: 'XS',  detalle: '70cm',  jean: 'Jean 36' },
+  { label: 'S',   detalle: '75cm',  jean: 'Jean 38' },
+  { label: 'M',   detalle: '80cm',  jean: 'Jean 40' },
+  { label: 'L',   detalle: '85cm', jean: 'Jean 42' },
+  { label: 'XL',  detalle: '90cm', jean: 'Jean 44' },
+  { label: 'XXL', detalle: '95cm', jean: 'Jean 46' },
 ];
 
 const TALLES_BRAZALETE = [
@@ -70,18 +70,11 @@ function GuiaTalles({ onCerrar }) {
             </tr>
           </thead>
           <tbody>
-            {[
-              { talle: 'XS', largo: '85cm', jean: '34 / 36' },
-              { talle: 'S',  largo: '90cm', jean: '36 / 38' },
-              { talle: 'M',  largo: '95cm', jean: '38 / 40' },
-              { talle: 'L',  largo: '100cm', jean: '40 / 42' },
-              { talle: 'XL', largo: '105cm', jean: '42 / 44' },
-              { talle: 'XXL', largo: '110cm', jean: '44 / 46' },
-            ].map((row, i) => (
-              <tr key={row.talle} style={{ backgroundColor: i % 2 === 0 ? 'rgba(255,255,255,0.04)' : 'transparent' }}>
-                <td style={estiloCelda}><strong>{row.talle}</strong></td>
-                <td style={estiloCelda}>{row.largo}</td>
-                <td style={estiloCelda}>{row.jean}</td>
+            {TALLES_CINTO.map((t, i) => (
+              <tr key={t.label} style={{ backgroundColor: i % 2 === 0 ? 'rgba(255,255,255,0.04)' : 'transparent' }}>
+                <td style={estiloCelda}><strong>{t.label}</strong></td>
+                <td style={estiloCelda}>{t.detalle}</td>
+                <td style={estiloCelda}>{t.jean}</td>
               </tr>
             ))}
           </tbody>
@@ -125,14 +118,8 @@ function Navbar({ carrito, onAbrirCarrito, colores }) {
   return (
     <nav style={estiloNavbar(colores)}>
       <div style={estiloContenedorLogo}>
-        <img
-          src="/logo1.png"
-          alt="Cauce"
-          style={{ ...estiloImagenLogo, cursor: 'pointer' }}
-          onClick={() => navigate('/')}
-        />
+        <img src="/logo1.png" alt="Cauce" style={{ ...estiloImagenLogo, cursor: 'pointer' }} onClick={() => navigate('/')} />
       </div>
-
       {enCatalogo && (
         <div style={estiloBreadcrumb}>
           <span style={estiloMigaInactiva} onClick={() => navigate('/')}>INICIO</span>
@@ -148,7 +135,6 @@ function Navbar({ carrito, onAbrirCarrito, colores }) {
           )}
         </div>
       )}
-
       <div style={estiloContenedorCarrito}>
         <div onClick={onAbrirCarrito} style={{ position: 'relative', cursor: 'pointer', padding: '4px' }}>
           <ShoppingBag size={26} color="#fff" />
@@ -258,7 +244,9 @@ function App() {
         const medida = item.medidaMuneca ? `Muñeca: ${item.medidaMuneca}cm` : 'Medida de muñeca: (pendiente)';
         return `• ${item.nombre} | ${medida}`;
       }
-      const talleInfo = item.talle ? `Talle ${item.talle.label} (${item.talle.detalle})` : 'Talle: (pendiente)';
+      const talleInfo = item.talle
+        ? `Talle ${item.talle.label} (${item.talle.detalle} / ${item.talle.jean})`
+        : 'Talle: (pendiente)';
       return `• ${item.nombre} | ${talleInfo}`;
     }).join('\n');
 
@@ -331,21 +319,28 @@ function App() {
                         <div style={{ flex: 1, minWidth: 0 }}>
                           <h4 style={{ margin: '0 0 4px 0', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{item.nombre}</h4>
                           {item.precio && (
-                          <p style={{ margin: '0 0 8px', fontSize: '0.78rem', color: '#c6a584', fontFamily: 'sans-serif', fontWeight: 'bold', letterSpacing: '1px' }}>
-                          ${Number(item.precio).toLocaleString('es-AR')}
-                          </p>
+                            <p style={{ margin: '0 0 8px', fontSize: '0.78rem', color: '#c6a584', fontFamily: 'sans-serif', fontWeight: 'bold', letterSpacing: '1px' }}>
+                              ${Number(item.precio).toLocaleString('es-AR')}
+                            </p>
                           )}
                           {!esBraz ? (
                             <div>
                               <p style={{ margin: '0 0 6px', fontSize: '0.6rem', opacity: 0.55, letterSpacing: '1px', fontFamily: 'sans-serif' }}>TALLE:</p>
-                              <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap' }}>
+                              {/* Botones centrados */}
+                              <div style={{ display: 'flex', justifyContent: 'center', gap: '5px', flexWrap: 'wrap' }}>
                                 {talles.map(t => (
-                                  <button key={t.label} onClick={() => actualizarTalle(index, t)} title={t.detalle} style={{ ...estiloBotonTalle, backgroundColor: item.talle?.label === t.label ? '#bcc1c3' : 'transparent', color: item.talle?.label === t.label ? '#41251c' : '#bcc1c3' }}>
+                                  <button key={t.label} onClick={() => actualizarTalle(index, t)} title={`${t.detalle} / ${t.jean}`}
+                                    style={{ ...estiloBotonTalle, backgroundColor: item.talle?.label === t.label ? '#bcc1c3' : 'transparent', color: item.talle?.label === t.label ? '#41251c' : '#bcc1c3' }}>
                                     {t.label}
                                   </button>
                                 ))}
                               </div>
-                              {item.talle && <p style={{ margin: '5px 0 0', fontSize: '0.58rem', opacity: 0.45, fontFamily: 'sans-serif' }}>{item.talle.detalle}</p>}
+                              {/* Referencia de talle seleccionado */}
+                              {item.talle && (
+                                <p style={{ margin: '6px 0 0', fontSize: '0.65rem', opacity: 0.6, fontFamily: 'sans-serif', textAlign: 'center', color: '#888787' }}>
+                                  {item.talle.detalle} · {item.talle.jean}
+                                </p>
+                              )}
                             </div>
                           ) : (
                             <div>
@@ -374,16 +369,7 @@ function App() {
 }
 
 // --- ESTILOS ---
-const estiloNavbar = (c) => ({
-  padding: '12px clamp(16px, 5vw, 70px)',
-  display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px',
-  backgroundImage: "linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('/banne.jpg')",
-  backgroundSize: 'cover', backgroundPosition: 'center',
-  borderBottom: '1px solid rgba(255,255,255,0.08)',
-  color: '#fff', backgroundColor: c.marronOscuro,
-  position: 'sticky', top: 0, zIndex: 50,
-  boxShadow: '0px 6px 24px rgba(0,0,0,0.5)'
-});
+const estiloNavbar = (c) => ({ padding: '12px clamp(16px, 5vw, 70px)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px', backgroundImage: "linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('/banne.jpg')", backgroundSize: 'cover', backgroundPosition: 'center', borderBottom: '1px solid rgba(255,255,255,0.08)', color: '#fff', backgroundColor: c.marronOscuro, position: 'sticky', top: 0, zIndex: 50, boxShadow: '0px 6px 24px rgba(0,0,0,0.5)' });
 const estiloContenedorLogo = { flex: '0 0 auto', display: 'flex', alignItems: 'center' };
 const estiloImagenLogo = { width: 'clamp(60px, 9vw, 95px)', height: 'auto' };
 const estiloBreadcrumb = { flex: '1 1 auto', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', color: '#fff', fontSize: 'clamp(0.55rem, 1.5vw, 0.72rem)', letterSpacing: '1.5px', fontFamily: 'sans-serif', flexWrap: 'wrap' };
