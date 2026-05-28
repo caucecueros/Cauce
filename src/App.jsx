@@ -337,7 +337,7 @@ function App() {
                               </div>
                               {/* Referencia de talle seleccionado */}
                               {item.talle && (
-                                <p style={{ margin: '6px 0 0', fontSize: '0.65rem', opacity: 0.6, fontFamily: 'sans-serif', textAlign: 'center', color: '#888787' }}>
+                                <p style={{ margin: '6px 0 0', fontSize: '0.65rem', opacity: 0.6, fontFamily: 'sans-serif', textAlign: 'center', color: '#ffffff' }}>
                                   {item.talle.detalle} · {item.talle.jean}
                                 </p>
                               )}
